@@ -14,4 +14,9 @@ Route::view('/modules', 'modules.index')
     ->middleware(['auth', 'verified'])
     ->name('modules');
 
+
+//ACTIVATE MODULE ROUTES
+
+Route::post('/modules/');
+
 require __DIR__.'/settings.php';

@@ -15,10 +15,12 @@
                         <button @click="openModal = {{ $id }}" class="flex-1 rounded-lg bg-neutral-900 px-3 py-2 text-xs font-semibold text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200 transition-all active:scale-95">
                             Detalhes
                         </button>
-                        
-                        <button class="flex-1 rounded-lg border border-neutral-200 px-3 py-2 text-xs font-semibold text-neutral-700 hover:bg-neutral-50 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 transition-all active:scale-95">
-                            Ativar
-                        </button>
+                        <form method="POST" action="/modules/{}/activate">
+                            @csrf
+                            <button type="submit" class="flex-1 rounded-lg border border-neutral-200 px-3 py-2 text-xs font-semibold text-neutral-700 hover:bg-neutral-50 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 transition-all active:scale-95">
+                                Ativar
+                            </button>
+                        </form>
                     </div>
                 </div>
 
@@ -50,12 +52,13 @@
                                     </button>
                                 </div>
                                 <div class="mt-6 space-y-4 text-neutral-600 dark:text-neutral-400">
-                                    <p>Ative seu módulo e acesse seu site com: <strong>{{ $title }}</strong></p>
+                                    <p>Ative seu módulo e acesse seu site com funcionalidades do módulo de: <strong>{{ $title }}</strong></p>
+                                    <a href="/modules/{{ $title }}">Saiba mais</a>
                                 </div>
                             </div>
                             
                         </div>
-                    </div>
+                    </div>ive' => true
                 </template>
             @endforeach
         </div>
