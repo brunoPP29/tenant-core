@@ -15,7 +15,7 @@
                         <button @click="openModal = {{ $id }}" class="flex-1 rounded-lg bg-neutral-900 px-3 py-2 text-xs font-semibold text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200 transition-all active:scale-95">
                             Detalhes
                         </button>
-                        <form method="POST" action="/modules/{}/activate">
+                        <form method="POST" action="/modules/{{$id}}/activate">
                             @csrf
                             <button type="submit" class="flex-1 rounded-lg border border-neutral-200 px-3 py-2 text-xs font-semibold text-neutral-700 hover:bg-neutral-50 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 transition-all active:scale-95">
                                 Ativar

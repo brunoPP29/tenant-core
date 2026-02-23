@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GlobalModulesController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,8 +16,8 @@ Route::view('/modules', 'modules.index')
     ->name('modules');
 
 
-//ACTIVATE MODULE ROUTES
+//ACTIVATE OR DEACTIVATE MODULE ROUTES
 
-Route::post('/modules/');
+Route::post('/modules/{id}/{action}', [GlobalModulesController::class, 'index']);
 
 require __DIR__.'/settings.php';
