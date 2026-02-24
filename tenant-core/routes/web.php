@@ -24,7 +24,13 @@ Route::post('/modules/{id}/{action}', [GlobalModulesController::class, ''])
 
 
 //CREATE MODULES ROUTES
-Route::get('/modules/create', [GlobalModulesController::class, 'index'])
+Route::view('/modules/create', 'modules.create')
     ->middleware(['auth', 'verified', 'superuser'])
     ->name('modules.create');
+
+Route::post('/modules/create', [GlobalModulesController::class, 'store'])
+    ->middleware(['auth', 'verified', 'superuser'])
+    ->name('modules.store');
+
+
 require __DIR__.'/settings.php';

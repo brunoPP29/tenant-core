@@ -11,7 +11,7 @@ class GlobalModulesController extends Controller
      */
     public function index()
     {
-        dd('vai tomar no tobao');
+        
     }
 
     /**
@@ -27,7 +27,7 @@ class GlobalModulesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
