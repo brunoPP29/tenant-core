@@ -10,12 +10,13 @@ class Module extends Model
         'name',
         'slug',
         'is_core',
+        'is_active',
         'file_path',
-        'config',
+        'default_settings',
     ];
 
     protected $casts = [
         'is_core' => 'boolean',
-        'config' => 'array',
+        'default_settings' => 'array',
     ];
 }

@@ -22,6 +22,7 @@ class ModuleService
             'slug' => $data['slug'],
             'is_core' => $data['is_core'] ?? false,
             'file_path' => $path,
+            'is_active' => false,
             'default_settings' => $defaultSettings,
         ]);
     }
