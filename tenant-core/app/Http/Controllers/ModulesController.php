@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreModuleRequest;
-use App\Services\ModuleService;
+use App\Models\Modules;
 use Illuminate\Http\Request;
 
-class GlobalModulesController extends Controller
+class ModulesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        
+        //
     }
 
     /**
@@ -21,29 +20,21 @@ class GlobalModulesController extends Controller
      */
     public function create()
     {
-        
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreModuleRequest $request, ModuleService $service)
+    public function store(Request $request)
     {
-        $service->create(
-            $request->validated(),
-            $request->file('module_file'),
-        );
-
-        return redirect()->route('modules.create');
-
-        
-
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Modules $modules)
     {
         //
     }
@@ -51,7 +42,7 @@ class GlobalModulesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Modules $modules)
     {
         //
     }
@@ -59,7 +50,7 @@ class GlobalModulesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Modules $modules)
     {
         //
     }
@@ -67,7 +58,7 @@ class GlobalModulesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Modules $modules)
     {
         //
     }
