@@ -11,16 +11,26 @@ Route::view('/', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::view('/modules', 'modules.index')
+Route::get('/modules', [GlobalModulesController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('modules.index');
+
+//SINGLE VIEW ROUTES
+
+Route::get('/modules/{slug}', [GlobalModulesController::class, 'show'])
+    ->middleware(['auth', 'verified'])  
+    ->name('modules.show');
 
 
 //ACTIVATE OR DEACTIVATE MODULE ROUTES
 
-Route::post('/modules/{id}/{action}', [GlobalModulesController::class, ''])
+Route::post('/modules/{id}', [GlobalModulesController::class, ''])
     ->middleware(['auth', 'verified'])
-    ->name('modules.action');; //falta endpoint de ativar ou n
+    ->name('modules.activate'); //falta endpoint de ativar ou n
+
+Route::patch('/modules/{id}', [GlobalModulesController::class, ''])
+    ->middleware(['auth', 'verified'])
+    ->name('modules.deactivate'); //falta endpoint de ativar ou n
 
 
 //CREATE MODULES ROUTES

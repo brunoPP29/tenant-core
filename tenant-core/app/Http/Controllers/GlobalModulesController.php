@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreModuleRequest;
+use App\Models\Module;
 use App\Services\ModuleService;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,8 @@ class GlobalModulesController extends Controller
      */
     public function index()
     {
-        
+        $modules = Module::all();
+        return view('modules.index', compact('modules'));
     }
 
     /**
