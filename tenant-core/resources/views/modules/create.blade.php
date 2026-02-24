@@ -10,13 +10,25 @@
                 Novo Módulo
             </h2>
 
+            
             <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
                 Preencha as informações para cadastrar um novo módulo.
             </p>
-
+            
             <form method="POST" action="{{ route('modules.store') }}" enctype="multipart/form-data" class="mt-6 space-y-5">
+                @if(session('success'))
+                    <div class="p-3 rounded bg-green-100 text-green-800">
+                        {{ session('success') }}
+                    </div>
+                @endif
+    
+                @if(session('error'))
+                    <div class="p-3 rounded bg-red-100 text-red-800">
+                        {{ session('error') }}
+                    </div>
+                @endif
                 @csrf
-
+                
                 <!-- Nome -->
                 <div>
                     <label class="block text-sm font-semibold text-neutral-700 dark:text-neutral-300">

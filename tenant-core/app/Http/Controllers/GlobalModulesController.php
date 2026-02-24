@@ -29,13 +29,24 @@ class GlobalModulesController extends Controller
      */
     public function store(StoreModuleRequest $request, ModuleService $service)
     {
-        $service->create(
-            $request->validated(),
-            $request->file('module_file'),
-        );
+        
+            try {
+                $service->create(
+                    $request->validated(),
+                    $request->file('module_file')
+                );
 
-        return redirect()->route('modules.create');
+                return redirect()
+                    ->route('modules.create')
+                    ->with('success', 'Módulo criado com sucesso!');
 
+            } catch (\Throwable $e) {
+
+                return back()
+                    ->withInput()
+                    ->with('error', 'Erro ao criar módulo.');
+            }
+        
         
 
     }
