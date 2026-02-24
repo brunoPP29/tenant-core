@@ -13,7 +13,7 @@ Route::view('/', 'dashboard')
 
 Route::view('/modules', 'modules.index')
     ->middleware(['auth', 'verified'])
-    ->name('modules');
+    ->name('modules.index');
 
 
 //ACTIVATE OR DEACTIVATE MODULE ROUTES

@@ -19,7 +19,7 @@
             </flux:sidebar.nav>
             <flux:sidebar.nav>
                 <flux:sidebar.group :heading="__('Módulos')" class="grid">
-                    <flux:sidebar.item icon="home" :href="route('modules')" :current="request()->routeIs('modules')" wire:navigate>
+                    <flux:sidebar.item icon="home" :href="route('modules.index')" :current="request()->routeIs('modules.index')" wire:navigate>
                         {{ __('Modules') }}
 
                     </flux:sidebar.item>

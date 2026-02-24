@@ -19,6 +19,10 @@
                 @if(session('success'))
                     <div class="p-3 rounded bg-green-100 text-green-800">
                         {{ session('success') }}
+                                <a href="{{ route('modules.index') }}"
+                                    class="ml-4 px-3 py-1 text-sm font-semibold bg-green-700 text-white rounded hover:bg-green-800">
+                                    Ver módulo
+                                </a>
                     </div>
                 @endif
     
