@@ -3,10 +3,6 @@
 use App\Http\Controllers\GlobalModulesController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('dashboard');
-})->name('home');
-
 Route::view('/', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
