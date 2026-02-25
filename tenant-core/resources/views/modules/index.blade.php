@@ -90,6 +90,14 @@
                                     <p>
                                         Ative seu módulo e acesse funcionalidades de:
                                         <strong>{{ $module->name }}</strong>
+                                        <form method="POST" action="{{ route('modules.delete', $module->id) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                            <button type="submit"
+                                                class="flex-1 rounded-lg border border-red-200 px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900 transition-all active:scale-95">
+                                                DELETAR MÓDULO
+                                            </button>
+                                        </form>
                                     </p>
 
                                     <a href="{{ route('modules.show', $module->slug) }}"

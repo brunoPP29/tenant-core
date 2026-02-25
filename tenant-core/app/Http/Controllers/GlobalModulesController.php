@@ -82,7 +82,17 @@ class GlobalModulesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try{
+            Module::destroy($id);
+
+                return redirect()
+                    ->route('modules.index')
+                    ->with('success', 'Módulo deletado com sucesso!');
+            }catch(\Throwable $e){
+                return back()
+                    ->withInput()
+                    ->with('error', 'Erro ao deletar módulo.');
+    }
     }
 
 

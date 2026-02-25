@@ -25,6 +25,11 @@ Route::post('/modules/create', [GlobalModulesController::class, 'store'])
     ->middleware(['auth', 'verified', 'superuser'])
     ->name('modules.store');
 
+//deletar módulo
+Route::delete('modules/delete/{id}', [GlobalModulesController::class, 'destroy'])
+    ->middleware(['auth', 'verified', 'superuser'])
+    ->name('modules.delete');
+
 // ativar / desativar global
 Route::patch('/modules/{id}/activate', [GlobalModulesController::class, 'activate'])
     ->middleware(['auth', 'verified', 'superuser'])
