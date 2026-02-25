@@ -18,17 +18,17 @@
                 </flux:sidebar.group>
             </flux:sidebar.nav>
             <flux:sidebar.nav>
+                @if(auth()->user()->superuser)
                 <flux:sidebar.group :heading="__('Módulos')" class="grid">
                     <flux:sidebar.item icon="home" :href="route('modules.index')" :current="request()->routeIs('modules.index')" wire:navigate>
                         {{ __('Modules') }}
 
                     </flux:sidebar.item>
-                    @if(auth()->user()->superuser)
-                    <flux:sidebar.item icon="wrench" :href="route('modules.create')" :current="request()->routeIs('modules.create')" wire:navigate>
-                            {{ __('Criar módulo') }}
+                        <flux:sidebar.item icon="wrench" :href="route('modules.create')" :current="request()->routeIs('modules.create')" wire:navigate>
+                                {{ __('Criar módulo') }}
                         </flux:sidebar.item>
-                        @endif
-                </flux:sidebar.group>
+                    </flux:sidebar.group>
+                    @endif
             </flux:sidebar.nav>
 
             <flux:spacer />

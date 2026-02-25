@@ -25,26 +25,25 @@
                             class="flex-1 rounded-lg bg-neutral-900 px-3 py-2 text-xs font-semibold text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200 transition-all active:scale-95">
                             Detalhes
                         </button>
-
-                        @if(!$module->is_active)
-                            {{-- ATIVAR --}}
-                            <form method="POST" action="{{ route('modules.activate', $module->id) }}">
+                    @if(!$module->is_active)
+                    {{-- ATIVAR --}}
+                    <form method="POST" action="{{ route('modules.activate', $module->id) }}">
                                 @csrf
                                 <button type="submit"
                                     class="flex-1 rounded-lg border border-neutral-200 px-3 py-2 text-xs font-semibold text-neutral-700 hover:bg-neutral-50 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 transition-all active:scale-95">
-                                    Ativar
+                                    Disponibilizar
                                 </button>
                             </form>
-                        @else
+                            @else
                             {{-- DESATIVAR --}}
                             <form method="POST" action="{{ route('modules.deactivate', $module->id) }}">
                                 @csrf
                                 @method('PATCH')
                                 <button type="submit"
-                                    class="flex-1 rounded-lg border border-red-200 px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900 transition-all active:scale-95">
-                                    Desativar
-                                </button>
-                            </form>
+                                class="flex-1 rounded-lg border border-red-200 px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900 transition-all active:scale-95">
+                                Tirar do ar
+                            </button>
+                        </form>
                         @endif
 
                     </div>
