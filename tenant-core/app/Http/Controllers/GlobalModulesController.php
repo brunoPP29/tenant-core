@@ -84,4 +84,43 @@ class GlobalModulesController extends Controller
     {
         //
     }
+
+
+    //activate or deactivate modules by admin
+
+    public function activate(Request $request){
+        try{
+            Module::where('id', $request->id)
+                ->update([
+                    'is_active' => true
+                ]);
+
+                return redirect()
+                    ->route('modules.index')
+                    ->with('success', 'Módulo atualizado com sucesso!');
+            }catch(\Throwable $e){
+                return back()
+                    ->withInput()
+                    ->with('error', 'Erro ao atualizar módulo.');
+    }
+        
+    } 
+
+    public function deactivate(Request $request){
+        try{
+            Module::where('id', $request->id)
+                ->update([
+                    'is_active' => false
+                ]);
+
+                return redirect()
+                    ->route('modules.index')
+                    ->with('success', 'Módulo atualizado com sucesso!');
+            }catch(\Throwable $e){
+                return back()
+                    ->withInput()
+                    ->with('error', 'Erro ao atualizar módulo.');
+    }
+    }
 }
+

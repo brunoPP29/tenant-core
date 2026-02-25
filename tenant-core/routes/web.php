@@ -31,12 +31,12 @@ Route::get('/modules', [GlobalModulesController::class, 'index'])
     
     
     //ACTIVATE OR DEACTIVATE MODULE ROUTES
-    
-    Route::post('/modules/{id}', [GlobalModulesController::class, ''])
+    Route::patch('/modules/activate/{id}', [GlobalModulesController::class, 'activate'])
         ->middleware(['auth', 'verified'])
         ->name('modules.activate'); //falta endpoint de ativar ou n
     
-    Route::patch('/modules/{id}', [GlobalModulesController::class, ''])
+    Route::patch('/modules/deactivate/{id}', [GlobalModulesController::class, 'deactivate'])
         ->middleware(['auth', 'verified'])
         ->name('modules.deactivate'); //falta endpoint de ativar ou n
+    
 require __DIR__.'/settings.php';

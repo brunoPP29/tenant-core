@@ -2,6 +2,18 @@
 
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl" x-data="{ openModal: null }">
         
+        @if(session('success'))
+                <div class="p-3 rounded bg-green-100 text-green-800">
+                    {{ session('success') }}
+
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="p-3 rounded bg-red-100 text-red-800">
+                    {{ session('error') }}
+                </div>
+            @endif
         <div class="grid auto-rows-min gap-4 md:grid-cols-3">
 
             @foreach($modules as $module)
@@ -29,22 +41,23 @@
                     {{-- ATIVAR --}}
                     <form method="POST" action="{{ route('modules.activate', $module->id) }}">
                                 @csrf
-                                <button type="submit"
-                                    class="flex-1 rounded-lg border border-neutral-200 px-3 py-2 text-xs font-semibold text-neutral-700 hover:bg-neutral-50 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 transition-all active:scale-95">
-                                    Disponibilizar
-                                </button>
-                            </form>
-                            @else
-                            {{-- DESATIVAR --}}
-                            <form method="POST" action="{{ route('modules.deactivate', $module->id) }}">
+                                @method('PATCH')
+                            <button type="submit"
+                                class="flex-1 rounded-lg border border-neutral-200 px-3 py-2 text-xs font-semibold text-neutral-700 hover:bg-neutral-50 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 transition-all active:scale-95">
+                                Disponibilizar
+                            </button>
+                    </form>
+                    @else
+                    {{-- DESATIVAR --}}
+                    <form method="POST" action="{{ route('modules.deactivate', $module->id) }}">
                                 @csrf
                                 @method('PATCH')
-                                <button type="submit"
+                            <button type="submit"
                                 class="flex-1 rounded-lg border border-red-200 px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900 transition-all active:scale-95">
                                 Tirar do ar
                             </button>
-                        </form>
-                        @endif
+                    </form>
+                    @endif
 
                     </div>
                 </div>

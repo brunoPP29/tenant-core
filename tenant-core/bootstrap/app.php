@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Illuminate\Foundation\Configuration\Middleware;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -15,6 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
         'superuser' => \App\Http\Middleware\Superuser::class,
     ]);
 })
-    ->withExceptions(function (Exceptions $exceptions): void {
-        //
-    })->create();
+    ->withExceptions(function (Exceptions $exceptions) {
+    $exceptions->render(function (MethodNotAllowedHttpException $e) {
+        abort(404);
+    });
+        })->create();
