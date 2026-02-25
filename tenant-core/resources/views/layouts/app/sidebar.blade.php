@@ -20,11 +20,11 @@
             <flux:sidebar.nav>
                 @if(auth()->user()->superuser)
                 <flux:sidebar.group :heading="__('Módulos')" class="grid">
-                    <flux:sidebar.item icon="home" :href="route('modules.index')" :current="request()->routeIs('modules.index')" wire:navigate>
+                    <flux:sidebar.item icon="puzzle-piece" :href="route('modules.index')" :current="request()->routeIs('modules.index')" wire:navigate>
                         {{ __('Modules') }}
 
                     </flux:sidebar.item>
-                        <flux:sidebar.item icon="wrench" :href="route('modules.create')" :current="request()->routeIs('modules.create')" wire:navigate>
+                        <flux:sidebar.item icon="plus" :href="route('modules.create')" :current="request()->routeIs('modules.create')" wire:navigate>
                                 {{ __('Criar módulo') }}
                         </flux:sidebar.item>
                     </flux:sidebar.group>
@@ -32,7 +32,7 @@
                     @if(!auth()->user()->superuser)
 
                     <flux:sidebar.group :heading="__('Módulos')" class="grid">
-                        <flux:sidebar.item icon="home" :href="route('modulesCompany.index')" :current="request()->routeIs('modulesCompany.index')" wire:navigate>
+                        <flux:sidebar.item icon="puzzle-piece" :href="route('modulesCompany.index')" :current="request()->routeIs('modulesCompany.index')" wire:navigate>
                             {{ __('Modules') }}
                         </flux:sidebar.item>
                     </flux:sidebar.group>

@@ -36,7 +36,7 @@ class ModulesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Modules $modules)
+    public function show(Module $modules)
     {
         //
     }
@@ -44,7 +44,7 @@ class ModulesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Modules $modules)
+    public function edit(Module $modules)
     {
         //
     }
@@ -52,7 +52,7 @@ class ModulesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Modules $modules)
+    public function update(Request $request, Module $modules)
     {
         //
     }
@@ -60,7 +60,7 @@ class ModulesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Modules $modules)
+    public function destroy(Module $modules)
     {
         //
     }
