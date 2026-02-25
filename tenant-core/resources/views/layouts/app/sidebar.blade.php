@@ -29,6 +29,15 @@
                         </flux:sidebar.item>
                     </flux:sidebar.group>
                     @endif
+                    @if(!auth()->user()->superuser)
+
+                    <flux:sidebar.group :heading="__('Módulos')" class="grid">
+                        <flux:sidebar.item icon="home" :href="route('modulesCompany.index')" :current="request()->routeIs('modulesCompany.index')" wire:navigate>
+                            {{ __('Modules') }}
+                        </flux:sidebar.item>
+                    </flux:sidebar.group>
+
+                    @endif
             </flux:sidebar.nav>
 
             <flux:spacer />

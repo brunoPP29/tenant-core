@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Modules;
+use App\Models\Module;
 use Illuminate\Http\Request;
 
 class ModulesController extends Controller
@@ -12,7 +12,9 @@ class ModulesController extends Controller
      */
     public function index()
     {
-        //
+        $modules = Module::where('is_active', true)
+                    ->get();
+        return view('modules_company.index', compact('modules'));
     }
 
     /**
