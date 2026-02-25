@@ -11,61 +11,56 @@ Route::view('/', 'dashboard')
 
 // ================= ADMIN ROUTES =================
 
-// lista módulos globais
-Route::get('/modules', [GlobalModulesController::class, 'index'])
-    ->middleware(['auth', 'verified', 'superuser'])
-    ->name('modules.index');
+Route::middleware(['auth', 'verified', 'superuser'])->group(function () {
 
-// criar módulo
-Route::view('/modules/create', 'modules.create')
-    ->middleware(['auth', 'verified', 'superuser'])
-    ->name('modules.create');
+    // lista módulos globais
+    Route::get('/modules', [GlobalModulesController::class, 'index'])
+        ->name('modules.index');
 
-Route::post('/modules/create', [GlobalModulesController::class, 'store'])
-    ->middleware(['auth', 'verified', 'superuser'])
-    ->name('modules.store');
+    // criar módulo
+    Route::view('/modules/create', 'modules.create')
+        ->name('modules.create');
 
-//deletar módulo
-Route::delete('modules/delete/{id}', [GlobalModulesController::class, 'destroy'])
-    ->middleware(['auth', 'verified', 'superuser'])
-    ->name('modules.delete');
+    Route::post('/modules/create', [GlobalModulesController::class, 'store'])
+        ->name('modules.store');
 
-// ativar / desativar global
-Route::patch('/modules/{id}/activate', [GlobalModulesController::class, 'activate'])
-    ->middleware(['auth', 'verified', 'superuser'])
-    ->name('modules.activate');
+    // deletar módulo
+    Route::delete('modules/delete/{id}', [GlobalModulesController::class, 'destroy'])
+        ->name('modules.delete');
 
-Route::patch('/modules/{id}/deactivate', [GlobalModulesController::class, 'deactivate'])
-    ->middleware(['auth', 'verified', 'superuser'])
-    ->name('modules.deactivate');
+    // ativar / desativar global
+    Route::patch('/modules/{id}/activate', [GlobalModulesController::class, 'activate'])
+        ->name('modules.activate');
 
-//ver modulo especifico
-Route::get('/modules/{slug}', [ModulesController::class, 'show'])
-    ->middleware(['auth', 'verified', 'superuser'])
-    ->name('modules.show');
+    Route::patch('/modules/{id}/deactivate', [GlobalModulesController::class, 'deactivate'])
+        ->name('modules.deactivate');
+
+    // ver modulo especifico
+    Route::get('/modules/{slug}', [ModulesController::class, 'show'])
+        ->name('modules.show');
+});
 
 
 // ================= USER / COMPANY ROUTES =================
 
-// listar módulos disponíveis para empresa
-Route::get('/company/modules', [ModulesController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('modulesCompany.index');
+Route::middleware(['auth', 'verified'])->group(function () {
 
-// ver módulo específico
-Route::get('/company/modules/{slug}', [ModulesController::class, 'show'])
-    ->middleware(['auth', 'verified'])
-    ->name('modulesCompany.show');
+    // listar módulos disponíveis para empresa
+    Route::get('/company/modules', [ModulesController::class, 'index'])
+        ->name('modulesCompany.index');
 
-// ativar para empresa
-Route::patch('/company/modules/{id}/activate', [ModulesController::class, 'activate'])
-    ->middleware(['auth', 'verified'])
-    ->name('modulesCompany.activate');
+    // ver módulo específico
+    Route::get('/company/modules/{slug}', [ModulesController::class, 'show'])
+        ->name('modulesCompany.show');
 
-// desativar para empresa
-Route::patch('/company/modules/{id}/deactivate', [ModulesController::class, 'deactivate'])
-    ->middleware(['auth', 'verified'])
-    ->name('modulesCompany.deactivate');
+    // ativar para empresa
+    Route::patch('/company/modules/{id}/activate', [ModulesController::class, 'activate'])
+        ->name('modulesCompany.activate');
+
+    // desativar para empresa
+    Route::patch('/company/modules/{id}/deactivate', [ModulesController::class, 'deactivate'])
+        ->name('modulesCompany.deactivate');
+});
 
 
 require __DIR__.'/settings.php';
