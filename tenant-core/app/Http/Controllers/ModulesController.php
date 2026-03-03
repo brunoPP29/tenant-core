@@ -83,4 +83,13 @@ class ModulesController extends Controller
             return view('modules_company.active', compact('defaultSettings'));
         }
     }
+
+    public function deactive(string $id){
+            $module_id = $id;
+            CompanyModule::where('module_id', $module_id)
+                        ->update(['is_active' => false]);
+            return redirect()
+                    ->route('modules.index')
+                    ->with('success', 'Módulo desativado com sucesso!');
+    }
 }
