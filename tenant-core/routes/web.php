@@ -60,6 +60,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // desativar para empresa
     Route::patch('/company/modules/{id}/deactivate', [ModulesController::class, 'deactivate'])
         ->name('modulesCompany.deactivate');
+
+    Route::patch('/company/modules/store', [ModulesController::class, 'store'])
+        ->name('modulesCompany.store');
 });
 
 

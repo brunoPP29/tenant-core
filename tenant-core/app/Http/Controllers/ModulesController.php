@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CompanyModule;
 use App\Models\Module;
+use Faker\Provider\Company;
 use Illuminate\Http\Request;
 
 class ModulesController extends Controller
@@ -14,7 +16,8 @@ class ModulesController extends Controller
     {
         $modules = Module::where('is_active', true)
                     ->get();
-        return view('modules_company.index', compact('modules'));
+        $companyModules = CompanyModule::all();
+        return view('modules_company.index', compact('modules', 'companyModules'));
     }
 
     /**
@@ -63,5 +66,21 @@ class ModulesController extends Controller
     public function destroy(Module $modules)
     {
         //
+    }
+
+    public function activate(string $id){
+        $module_id = $id;
+        $existing = CompanyModule::where('module_id', $module_id)
+                            ->first();
+        if ($existing) {
+            CompanyModule::where('module_id', $module_id)
+                        ->update(['is_active' => true]);
+        }else{
+            //vai ser primeira vez ativando
+            $defaultSettings = Module::where('id', $module_id)
+                ->value('default_settings');
+
+            return view('modules_company.active', compact('defaultSettings'));
+        }
     }
 }
