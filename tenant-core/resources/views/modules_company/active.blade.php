@@ -45,10 +45,10 @@
                         
                         @if($field['type'] === 'hidden')
                         <input type="hidden"
-                                name="slug"
-                                value="{{ old($name, $field['slug'] ?? '') }}">
-                                
+                        name="slug"
+                        value="{{ old($name, $field['slug'] ?? '') }}">
                         @endif
+                        <input type="hidden" value="{{ $module_id }}" name="module_id">
 
                         {{-- NUMBER --}}
                         @if($field['type'] === 'number')

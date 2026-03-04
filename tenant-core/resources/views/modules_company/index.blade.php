@@ -43,7 +43,7 @@
             </button>
 
             {{-- EXISTE E ESTÁ ATIVO → DESATIVAR --}}
-            @if($companyModule && $companyModule->active)
+            @if($companyModule && $companyModule->is_active)
 
                 <form method="POST" action="{{ route('modulesCompany.deactivate', $module->id) }}">
                     @csrf

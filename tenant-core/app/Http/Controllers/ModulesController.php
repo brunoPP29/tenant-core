@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\CompanyModule;
+use App\Services\CompanyModuleService;
 use App\Models\Module;
-use Faker\Provider\Company;
 use Illuminate\Http\Request;
 
 class ModulesController extends Controller
@@ -31,9 +31,20 @@ class ModulesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, CompanyModuleService $service)
     {
-        dd($request);
+            try {
+                $service->create($request->request);
+
+                return redirect()
+                    ->route('modulesCompany.index')
+                    ->with('success', 'Módulo ativado com sucesso!');
+
+            } catch (\Throwable $e) {
+                return back()
+                    ->withInput()
+                    ->with('error', 'Erro ao ativar módulo.');
+            }
     }
 
     /**
@@ -73,22 +84,26 @@ class ModulesController extends Controller
         $existing = CompanyModule::where('module_id', $module_id)
                             ->first();
         if ($existing) {
+            //ja existe eh so ativar
             CompanyModule::where('module_id', $module_id)
-                        ->update(['is_active' => true]);
+                    ->update(['is_active' => true]);
+                return redirect()
+                    ->route('modulesCompany.index')
+                    ->with('success', 'Módulo ativado com sucesso!');
         }else{
             //vai ser primeira vez ativando
             $defaultSettings = Module::where('id', $module_id)
                 ->value('default_settings');
-            return view('modules_company.active', compact('defaultSettings'));
+            return view('modules_company.active', compact('defaultSettings', 'module_id'));
         }
     }
 
-    public function deactive(string $id){
+    public function deactivate(string $id){
             $module_id = $id;
             CompanyModule::where('module_id', $module_id)
                         ->update(['is_active' => false]);
             return redirect()
-                    ->route('modules.index')
+                    ->route('modulesCompany.index')
                     ->with('success', 'Módulo desativado com sucesso!');
     }
 }
