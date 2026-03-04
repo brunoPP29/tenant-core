@@ -35,11 +35,20 @@
                     <div class="flex flex-col gap-2">
 
                         <label class="text-sm font-semibold text-neutral-700 dark:text-neutral-300">
+                            
                             @if($name === 'infos')
                             @else
                             {{ $field['label'] ?? ucfirst($name) }}
+                            
                             @endif
                         </label>
+                        
+                        @if($field['type'] === 'hidden')
+                        <input type="hidden"
+                                name="slug"
+                                value="{{ old($name, $field['slug'] ?? '') }}">
+                                
+                        @endif
 
                         {{-- NUMBER --}}
                         @if($field['type'] === 'number')

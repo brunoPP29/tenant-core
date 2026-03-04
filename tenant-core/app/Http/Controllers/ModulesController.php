@@ -33,7 +33,7 @@ class ModulesController extends Controller
      */
     public function store(Request $request)
     {
-            
+        dd($request);
     }
 
     /**
@@ -79,7 +79,6 @@ class ModulesController extends Controller
             //vai ser primeira vez ativando
             $defaultSettings = Module::where('id', $module_id)
                 ->value('default_settings');
-
             return view('modules_company.active', compact('defaultSettings'));
         }
     }
