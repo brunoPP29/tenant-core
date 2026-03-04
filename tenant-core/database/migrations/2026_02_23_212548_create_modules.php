@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->string('slug');
             $table->json('default_settings');
             $table->boolean('is_active');
             $table->boolean('is_core');

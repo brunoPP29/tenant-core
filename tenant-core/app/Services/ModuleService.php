@@ -19,7 +19,6 @@ class ModuleService
         // persistir no banco de dados
         return Module::create([
             'name' => $data['name'],
-            'slug' => $data['slug'],
             'is_core' => $data['is_core'] ?? false,
             'file_path' => $path,
             'is_active' => false,

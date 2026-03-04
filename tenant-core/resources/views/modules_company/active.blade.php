@@ -28,13 +28,17 @@
 
             <form method="POST" action="{{ route('modulesCompany.store') }}" class="mt-6 space-y-5">
                 @csrf
+                @method('PATCH')
 
                 @foreach($defaultSettings as $name => $field)
 
                     <div class="flex flex-col gap-2">
 
                         <label class="text-sm font-semibold text-neutral-700 dark:text-neutral-300">
+                            @if($name === 'infos')
+                            @else
                             {{ $field['label'] ?? ucfirst($name) }}
+                            @endif
                         </label>
 
                         {{-- NUMBER --}}

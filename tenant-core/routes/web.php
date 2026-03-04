@@ -21,7 +21,7 @@ Route::middleware(['auth', 'verified', 'superuser'])->group(function () {
     Route::view('/modules/create', 'modules.create')
         ->name('modules.create');
 
-    Route::post('/modules/create', [GlobalModulesController::class, 'store'])
+    Route::patch('/modules/create', [GlobalModulesController::class, 'store'])
         ->name('modules.store');
 
     // deletar módulo

@@ -31,7 +31,6 @@ class GlobalModulesController extends Controller
      */
     public function store(StoreModuleRequest $request, ModuleService $service)
     {
-        
             try {
                 $service->create(
                     $request->validated(),
@@ -43,7 +42,6 @@ class GlobalModulesController extends Controller
                     ->with('success', 'Módulo criado com sucesso!');
 
             } catch (\Throwable $e) {
-
                 return back()
                     ->withInput()
                     ->with('error', 'Erro ao criar módulo.');
@@ -58,7 +56,7 @@ class GlobalModulesController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**

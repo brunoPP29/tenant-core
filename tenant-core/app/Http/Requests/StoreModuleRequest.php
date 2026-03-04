@@ -23,7 +23,6 @@ class StoreModuleRequest extends FormRequest
     {
         return [
         'name' => 'required|string|max:255',
-        'slug' => 'required|string|max:255|unique:modules,slug',
         'is_core' => 'nullable|boolean',
         'module_file' => 'required|file|mimes:json|max:2048',
         ];

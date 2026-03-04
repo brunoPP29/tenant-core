@@ -16,6 +16,9 @@
             </p>
             
             <form method="POST" action="{{ route('modules.store') }}" enctype="multipart/form-data" class="mt-6 space-y-5">
+                @csrf
+                @method('PATCH')
+
                 @if(session('success'))
                     <div class="p-3 rounded bg-green-100 text-green-800">
                         {{ session('success') }}
@@ -31,7 +34,6 @@
                         {{ session('error') }}
                     </div>
                 @endif
-                @csrf
                 
                 <!-- Nome -->
                 <div>
@@ -39,15 +41,6 @@
                         Nome
                     </label>
                     <input type="text" name="name" required
-                        class="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm shadow-sm focus:border-neutral-900 focus:ring-neutral-900 dark:border-neutral-600 dark:bg-neutral-900 dark:text-white">
-                </div>
-
-                <!-- Slug -->
-                <div>
-                    <label class="block text-sm font-semibold text-neutral-700 dark:text-neutral-300">
-                        Slug
-                    </label>
-                    <input type="text" name="slug" required
                         class="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm shadow-sm focus:border-neutral-900 focus:ring-neutral-900 dark:border-neutral-600 dark:bg-neutral-900 dark:text-white">
                 </div>
 

@@ -8,7 +8,6 @@ class Module extends Model
 {
     protected $fillable = [
         'name',
-        'slug',
         'is_core',
         'is_active',
         'file_path',

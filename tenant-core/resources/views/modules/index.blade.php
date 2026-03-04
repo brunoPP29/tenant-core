@@ -100,7 +100,7 @@
                                         </form>
                                     </p>
 
-                                    <a href="{{ route('modules.show', $module->slug) }}"
+                                    <a href="{{ route('modules.show', $module->default_settings['infos']['slug']) }}"
                                        class="text-blue-600 hover:underline">
                                        Saiba mais
                                     </a>

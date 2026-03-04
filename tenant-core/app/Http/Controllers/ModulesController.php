@@ -33,7 +33,7 @@ class ModulesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+            
     }
 
     /**
