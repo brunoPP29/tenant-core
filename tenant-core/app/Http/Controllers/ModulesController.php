@@ -74,9 +74,20 @@ class ModulesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Module $modules)
+    public function destroy(string $id)
     {
-        //
+            try{
+            CompanyModule::where('module_id', $id)
+                ->delete();
+                return redirect()
+                    ->route('modulesCompany.index')
+                    ->with('success', 'Módulo resetado com sucesso!');
+            }catch(\Throwable $e){
+                dd($e);
+                return back()
+                    ->withInput()
+                    ->with('error', 'Erro ao resetar módulo.');
+    }
     }
 
     public function activate(string $id){

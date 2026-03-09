@@ -100,6 +100,12 @@
                             Ative seu módulo e acesse funcionalidades de:
                             <strong>{{ $module->name }}</strong>
                         </p>
+                        @if($companyModule && $companyModule->is_active)
+                        <a href="{{ route('modulesCompany.reset', $module->id)}}"
+                        class="text-orange-600 hover:underline">
+                        Resetar configurações
+                        </a>
+                        @endif
 
                         <a href="{{ route('modules.show', $module->default_settings['infos']['slug'])}}"
                            class="text-blue-600 hover:underline">

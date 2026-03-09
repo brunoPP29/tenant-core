@@ -82,7 +82,6 @@ class GlobalModulesController extends Controller
     {
         try{
             Module::destroy($id);
-
                 return redirect()
                     ->route('modules.index')
                     ->with('success', 'Módulo deletado com sucesso!');
