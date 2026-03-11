@@ -5,81 +5,73 @@ use App\Http\Controllers\GlobalModulesController;
 use App\Http\Controllers\ModulesController;
 use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| 1. ROTAS GERAIS (Abertas a qualquer logado)
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'verified'])->group(function () {
+    
+    Route::view('/', 'dashboard')->name('dashboard');
 
+});
 
-
-// ================= GLOBAL ROUTES =================
-Route::view('/', 'dashboard')
-->middleware(['auth', 'verified'])
-->name('dashboard');
-
-// ================= ADMIN ROUTES =================
-
+/*
+|--------------------------------------------------------------------------
+| 2. ROTAS ADMINISTRATIVAS (Superuser)
+| Gerenciamento Global de Módulos
+|--------------------------------------------------------------------------
+*/
 Route::middleware(['auth', 'verified', 'superuser'])->group(function () {
-    
-    // lista módulos globais
-    Route::get('/modules', [GlobalModulesController::class, 'index'])
-    ->name('modules.index');
-    
-    // criar módulo
-    Route::view('/modules/create', 'modules.create')
-    ->name('modules.create');
-    
-    Route::patch('/modules/create', [GlobalModulesController::class, 'store'])
-    ->name('modules.store');
-    
-    // deletar módulo
-    Route::delete('modules/delete/{id}', [GlobalModulesController::class, 'destroy'])
-    ->name('modules.delete');
-    
-    // ativar / desativar global
-    Route::patch('/modules/{id}/activate', [GlobalModulesController::class, 'activate'])
-    ->name('modules.activate');
-    
-    Route::patch('/modules/{id}/deactivate', [GlobalModulesController::class, 'deactivate'])
-    ->name('modules.deactivate');
-    
+
+    // Grupo de Módulos Globais
+    Route::controller(GlobalModulesController::class)->group(function () {
+        Route::get('/modules', 'index')->name('modules.index');
+        Route::patch('/modules/create', 'store')->name('modules.store');
+        Route::delete('/modules/delete/{id}', 'destroy')->name('modules.delete');
+        
+        // Ativação Global
+        Route::patch('/modules/{id}/activate', 'activate')->name('modules.activate');
+        Route::patch('/modules/{id}/deactivate', 'deactivate')->name('modules.deactivate');
     });
-    
-    
-    // ================= USER / COMPANY ROUTES =================
-    
-    Route::middleware(['auth', 'verified'])->group(function () {
-        
-        // listar módulos disponíveis para empresa
-        Route::get('/company/modules', [ModulesController::class, 'index'])
-        ->name('modulesCompany.index');
-        
-        // ver módulo específico
-        Route::get('/company/modules/{slug}', [ModulesController::class, 'show'])
-        ->name('modulesCompany.show');
-        
-        Route::get('/company/modules/{id}/reset', [ModulesController::class, 'destroy'])
-        ->name('modulesCompany.reset');
-        
-        // ativar para empresa
-        Route::patch('/company/modules/{id}/activate', [ModulesController::class, 'activate'])
-        ->name('modulesCompany.activate');
-        
-        // desativar para empresa
-        Route::patch('/company/modules/{id}/deactivate', [ModulesController::class, 'deactivate'])
-        ->name('modulesCompany.deactivate');
-        
 
-        
-        Route::patch('/company/modules/store', [ModulesController::class, 'store'])
-        ->name('modulesCompany.store');
-        
-        Route::get('/company/settings', [CompanySettingsController::class, 'index'])
-            ->name('settingsCompany.index');
+    // View de criação (separada pois não usa controller)
+    Route::view('/modules/create', 'modules.create')->name('modules.create');
 
-        Route::patch('company/settings', [CompanySettingsController::class, 'store'])
-            ->name('settingsCompany.store');
+});
+
+/*
+|--------------------------------------------------------------------------
+| 3. ROTAS DE EMPRESA / USUÁRIO
+| Gerenciamento de Módulos e Configurações da Empresa
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    // --- Módulos da Empresa ---
+    Route::controller(ModulesController::class)->group(function () {
+        Route::get('/company/modules', 'index')->name('modulesCompany.index');
+        Route::get('/company/modules/{slug}', 'show')->name('modulesCompany.show');
+        Route::get('/company/modules/{id}/reset', 'destroy')->name('modulesCompany.reset');
+        Route::patch('/company/modules/{id}/activate', 'activate')->name('modulesCompany.activate');
+        Route::patch('/company/modules/{id}/deactivate', 'deactivate')->name('modulesCompany.deactivate');
+        Route::patch('/company/modules/store', 'store')->name('modulesCompany.store');
         
-        // ver modulo especifico
-        Route::get('/modules/{slug}', [ModulesController::class, 'show'])
-            ->name('modules.show');
-        });
-        
-        
-        require __DIR__.'/settings.php';
+        // Rota duplicada que você tinha no final do arquivo (mantida por segurança)
+        Route::get('/modules/{slug}', 'show')->name('modules.show');
+    });
+
+    // --- Configurações da Empresa ---
+    Route::controller(CompanySettingsController::class)->group(function () {
+        Route::get('/company/settings', 'index')->name('settingsCompany.index');
+        Route::patch('/company/settings', 'store')->name('settingsCompany.store');
+    });
+
+});
+
+/*
+|--------------------------------------------------------------------------
+| 4. ARQUIVOS EXTERNOS
+|--------------------------------------------------------------------------
+*/
+require __DIR__.'/settings.php';
