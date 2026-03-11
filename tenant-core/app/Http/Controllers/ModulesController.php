@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CompanyModule;
-use App\Models\CompanySetting;
 use App\Services\CompanyModuleService;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Module;
 use Illuminate\Http\Request;
 
@@ -99,7 +97,7 @@ class ModulesController extends Controller
         $checkSettings = $service->isSettingsSetted();
         if (!$checkSettings) {
                 return redirect()
-                    ->route('modulesCompany.settingsEdit');
+                    ->route('settingsCompany.index');
         }else{
 
         }

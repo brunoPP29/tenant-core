@@ -21,13 +21,12 @@ class CompanySettingsController extends Controller
                 $data = is_array($record->settings) ? $record->settings : json_decode($record->settings, true);
                 
                 $settings = array_replace_recursive(CompanySettings::DEFAULT_SETTINGS, $data);
-
-        if (!$record) {
-            $settings = CompanySettings::DEFAULT_SETTINGS;
-        }
-    
-        return view('modules_company.editSettings', compact('settings'));
-    }
+                
+                
+                }else{
+                    $settings = CompanySettings::DEFAULT_SETTINGS;
+                    }
+                return view('modules_company.editSettings', compact('settings'));
     }
 
     /**
@@ -44,7 +43,7 @@ class CompanySettingsController extends Controller
     public function store(Request $request, CompanySettingsService $service)
     {
         try {
-            $settings = $service->create($request->request);
+            $service->create($request->request);
                     return redirect()
                         ->route('settingsCompany.index')
                         ->with('success', 'Configurações alteradas com sucesso!');
