@@ -17,36 +17,44 @@
                     </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>
+
             <flux:sidebar.nav>
                 @if(auth()->user()->superuser)
-                <flux:sidebar.group :heading="__('Módulos')" class="grid">
-                    <flux:sidebar.item icon="puzzle-piece" :href="route('modules.index')" :current="request()->routeIs('modules.index')" wire:navigate>
-                        {{ __('Modules') }}
-
-                    </flux:sidebar.item>
+                    <flux:sidebar.group :heading="__('Módulos')" class="grid">
+                        <flux:sidebar.item icon="puzzle-piece" :href="route('modules.index')" :current="request()->routeIs('modules.index')" wire:navigate>
+                            {{ __('Modules') }}
+                        </flux:sidebar.item>
                         <flux:sidebar.item icon="plus" :href="route('modules.create')" :current="request()->routeIs('modules.create')" wire:navigate>
-                                {{ __('Criar módulo') }}
+                            {{ __('Criar módulo') }}
                         </flux:sidebar.item>
                     </flux:sidebar.group>
-                    @endif
-                    @if(!auth()->user()->superuser)
-
+                @else
                     <flux:sidebar.group :heading="__('Módulos')" class="grid">
                         <flux:sidebar.item icon="puzzle-piece" :href="route('modulesCompany.index')" :current="request()->routeIs('modulesCompany.index')" wire:navigate>
                             {{ __('Modules') }}
                         </flux:sidebar.item>
                     </flux:sidebar.group>
+                @endif
+            </flux:sidebar.nav>
 
-                    @endif
+            <flux:sidebar.nav>
+                <flux:sidebar.group :heading="__('Geral')" class="grid">
+                    <flux:sidebar.item 
+                        icon="cog-6-tooth" 
+                        :href="route('settingsCompany.index')" 
+                        :current="request()->routeIs('settingsCompany.index')" 
+                        wire:navigate
+                    >
+                        {{ __('Configurações Gerais') }}
+                    </flux:sidebar.item>
+                </flux:sidebar.group>
             </flux:sidebar.nav>
 
             <flux:spacer />
 
-
             <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->name" />
         </flux:sidebar>
 
-        <!-- Mobile User Menu -->
         <flux:header class="lg:hidden">
             <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
 
