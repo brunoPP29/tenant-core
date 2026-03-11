@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompanySettingsController;
 use App\Http\Controllers\GlobalModulesController;
 use App\Http\Controllers\ModulesController;
 use Illuminate\Support\Facades\Route;
@@ -64,8 +65,16 @@ Route::middleware(['auth', 'verified', 'superuser'])->group(function () {
         Route::patch('/company/modules/{id}/deactivate', [ModulesController::class, 'deactivate'])
         ->name('modulesCompany.deactivate');
         
+
+        
         Route::patch('/company/modules/store', [ModulesController::class, 'store'])
         ->name('modulesCompany.store');
+        
+        Route::get('/company/settings', [CompanySettingsController::class, 'index'])
+            ->name('settingsCompany.index');
+
+        Route::patch('company/settings', [CompanySettingsController::class, 'store'])
+            ->name('settingsCompany.store');
         
         // ver modulo especifico
         Route::get('/modules/{slug}', [ModulesController::class, 'show'])

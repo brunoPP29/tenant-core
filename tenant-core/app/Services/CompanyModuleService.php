@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\CompanyModule;
+use App\Models\CompanySettings;
 use Illuminate\Support\Facades\Auth;
 
 class CompanyModuleService
@@ -18,5 +19,9 @@ class CompanyModuleService
             'activated_at' => now()->toDateTimeString(),
             'is_active' => true,
         ]);
+    }
+
+    public function isSettingsSetted(){
+        return CompanySettings::where('company_id', Auth::id())->exists();
     }
 }

@@ -25,4 +25,6 @@ class ModuleService
             'default_settings' => $defaultSettings,
         ]);
     }
+
+
 }

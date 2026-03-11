@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\CompanyModule;
+use App\Models\CompanySetting;
 use App\Services\CompanyModuleService;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Module;
 use Illuminate\Http\Request;
 
@@ -36,9 +38,9 @@ class ModulesController extends Controller
             try {
                 $service->create($request->request);
 
-                return redirect()
-                    ->route('modulesCompany.index')
-                    ->with('success', 'Módulo ativado com sucesso!');
+                    return redirect()
+                        ->route('modulesCompany.index')
+                        ->with('success', 'Módulo ativado com sucesso!');
 
             } catch (\Throwable $e) {
                 return back()
@@ -90,7 +92,18 @@ class ModulesController extends Controller
     }
     }
 
-    public function activate(string $id){
+    public function activate(string $id, CompanyModuleService $service){
+
+        //check if settings company already setted
+
+        $checkSettings = $service->isSettingsSetted();
+        if (!$checkSettings) {
+                return redirect()
+                    ->route('modulesCompany.settingsEdit');
+        }else{
+
+        }
+
         $module_id = $id;
         $existing = CompanyModule::where('module_id', $module_id)
                             ->first();
@@ -117,4 +130,6 @@ class ModulesController extends Controller
                     ->route('modulesCompany.index')
                     ->with('success', 'Módulo desativado com sucesso!');
     }
+
+
 }
