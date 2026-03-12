@@ -3,6 +3,7 @@
 use App\Http\Controllers\CompanySettingsController;
 use App\Http\Controllers\GlobalModulesController;
 use App\Http\Controllers\ModulesController;
+use App\Http\Controllers\SitesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -71,7 +72,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| 4. ARQUIVOS EXTERNOS
+| 4. ROTAS DO SITE DA COMPANY
+|--------------------------------------------------------------------------
+*/
+
+    Route::controller(SitesController::class)->group(function () {
+        Route::get('/site/{company_name}', 'index')->name('sites.index');
+    });
+
+
+/*
+|--------------------------------------------------------------------------
+| 5. ARQUIVOS EXTERNOS
 |--------------------------------------------------------------------------
 */
 require __DIR__.'/settings.php';

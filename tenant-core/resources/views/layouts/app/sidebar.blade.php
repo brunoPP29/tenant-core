@@ -2,6 +2,15 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
     <head>
         @include('partials.head')
+        {{-- Script simples para o botão de copiar --}}
+        <script>
+            function copySiteLink(url) {
+                navigator.clipboard.writeText(url).then(() => {
+                    // Feedback visual simples (opcional)
+                    alert('Link copiado com sucesso!');
+                });
+            }
+        </script>
     </head>
     <body class="min-h-screen bg-white dark:bg-zinc-800">
         <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
@@ -15,6 +24,26 @@
                     <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
                     </flux:sidebar.item>
+
+                    {{-- Link do Site e Botão Copiar (Apenas para não-superuser) --}}
+                    @if(!auth()->user()->superuser)
+                        @php $siteUrl = url('/site/' . auth()->user()->name); @endphp
+                        
+                        <flux:sidebar.item icon="globe-alt" href="{{ $siteUrl }}" target="_blank">
+                            {{ __('Ver meu Site') }}
+                            <flux:button 
+                                size="sm" 
+                                variant="subtle" 
+                                class="w-full justify-start text-xs"
+                                onclick="copySiteLink('{{ $siteUrl }}')"
+                            >
+                                {{ __('Copiar Link') }}
+                            </flux:button>
+                        </flux:sidebar.item>
+                        <div class="px-3 py-2">
+                        </div>
+
+                    @endif
                 </flux:sidebar.group>
             </flux:sidebar.nav>
 
@@ -84,6 +113,14 @@
                     </flux:menu.radio.group>
 
                     <flux:menu.separator />
+
+                    {{-- Link do Site no Mobile Menu --}}
+                    @if(!auth()->user()->superuser)
+                        <flux:menu.item href="/site/{{ auth()->user()->name }}" icon="globe-alt" target="_blank">
+                            {{ __('Ver meu Site') }}
+                        </flux:menu.item>
+                        <flux:menu.separator />
+                    @endif
 
                     <flux:menu.radio.group>
                         <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>
