@@ -19,6 +19,8 @@
                 <flux:sidebar.collapse class="lg:hidden" />
             </flux:sidebar.header>
 
+            
+
             <flux:sidebar.nav>
                 <flux:sidebar.group :heading="__('Platform')" class="grid">
                     <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
@@ -31,17 +33,17 @@
                         
                         <flux:sidebar.item icon="globe-alt" href="{{ $siteUrl }}" target="_blank">
                             {{ __('Ver meu Site') }}
-                            <flux:button 
-                                size="sm" 
-                                variant="subtle" 
-                                class="w-full justify-start text-xs"
-                                onclick="copySiteLink('{{ $siteUrl }}')"
-                            >
-                                {{ __('Copiar Link') }}
-                            </flux:button>
                         </flux:sidebar.item>
-                        <div class="px-3 py-2">
-                        </div>
+                        <flux:button 
+                            size="sm" 
+                            variant="subtle" 
+                            icon="clipboard"
+                            class="w-full justify-start text-xs"
+                            onclick="copySiteLink('{{ $siteUrl }}')"
+                        >
+                            {{ __('Copiar link do meu site') }}
+                        </flux:button>
+
 
                     @endif
                 </flux:sidebar.group>
