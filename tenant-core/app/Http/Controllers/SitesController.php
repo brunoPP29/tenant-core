@@ -66,16 +66,9 @@ class SitesController extends Controller
      */
     public function show(string $company_name, string $slug, SiteService $service)
     {
-$user = User::where('name', $company_name)->firstOrFail();
+    $user = User::where('name', $company_name)->firstOrFail();
 
-    $module = CompanyModule::where('user_id', $user->id)
-        ->where('is_active', true)
-        ->get()
-        ->first(function ($item) use ($slug) {
-            $settings = is_array($item->settings) ? $item->settings : json_decode($item->settings, true);
-            if (is_string($settings)) $settings = json_decode($settings, true);
-            return ($settings['slug'] ?? null) === $slug;
-        });
+    $module = $service->getModule($slug, $user);
 
     if (!$module) abort(404);
 

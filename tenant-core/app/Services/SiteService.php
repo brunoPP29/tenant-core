@@ -28,6 +28,17 @@ class SiteService
     public function getCompanySettings($user_id){
         return CompanySettings::where('company_id', $user_id)->value('settings');
     }
+
+    public function getModule($slug, $user){
+        return CompanyModule::where('user_id', $user->id)
+        ->where('is_active', true)
+        ->get()
+        ->first(function ($item) use ($slug) {
+            $settings = is_array($item->settings) ? $item->settings : json_decode($item->settings, true);
+            if (is_string($settings)) $settings = json_decode($settings, true);
+            return ($settings['slug'] ?? null) === $slug;
+        });
+    }
 }
 
 

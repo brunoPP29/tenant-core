@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompanySettingsController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\GlobalModulesController;
 use App\Http\Controllers\ModulesController;
 use App\Http\Controllers\SitesController;
@@ -67,6 +68,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/company/settings', 'index')->name('settingsCompany.index');
         Route::patch('/company/settings', 'store')->name('settingsCompany.store');
     });
+        /*
+        |--------------------------------------------------------------------------
+        | Gallery Routes
+        |--------------------------------------------------------------------------
+        */
+        Route::controller(GalleryController::class)->group(function () {
+            Route::get('/company/manage/gallery/{id}', 'index')->name('modulesCompany.galleryManage');
+    });
 
 });
 
@@ -82,9 +91,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
 
+
+
+
+
 /*
 |--------------------------------------------------------------------------
-| 5. ARQUIVOS EXTERNOS
+| 6. ARQUIVOS EXTERNOS
 |--------------------------------------------------------------------------
 */
 require __DIR__.'/settings.php';

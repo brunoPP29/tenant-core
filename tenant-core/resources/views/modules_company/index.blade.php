@@ -44,6 +44,19 @@
 
             {{-- EXISTE E ESTÁ ATIVO → DESATIVAR --}}
             @if($companyModule && $companyModule->is_active)
+                @php
+                // Se for string, decodifica. Se já for array (pelo cast), mantém.
+                $settings = is_array($companyModule->settings) 
+                    ? $companyModule->settings 
+                    : json_decode($companyModule->settings, true);
+                
+                $slug = $settings['slug'] ?? 'default';
+            @endphp
+
+            <a href="{{ route('modulesCompany.' . $slug . 'Manage', ['id' => $companyModule->id]) }}" 
+            class="inline-block flex-1 text-center rounded-lg bg-neutral-900 px-3 py-2 text-xs font-semibold text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200 transition-all active:scale-95">
+                Gerenciar
+            </a>
 
                 <form method="POST" action="{{ route('modulesCompany.deactivate', $module->id) }}">
                     @csrf
@@ -53,6 +66,8 @@
                         Desativar
                     </button>
                 </form>
+
+
 
             {{-- NÃO EXISTE OU ESTÁ DESATIVADO → ATIVAR --}}
             @else
