@@ -66,9 +66,9 @@ class SitesController extends Controller
      */
     public function show(string $company_name, string $slug, SiteService $service)
     {
-$company_id = User::where('name', $company_name)->value('id');
+$user = User::where('name', $company_name)->firstOrFail();
 
-    $module = CompanyModule::where('user_id', $company_id)
+    $module = CompanyModule::where('user_id', $user->id)
         ->where('is_active', true)
         ->get()
         ->first(function ($item) use ($slug) {
@@ -82,11 +82,24 @@ $company_id = User::where('name', $company_name)->value('id');
     $config = is_array($module->settings) ? $module->settings : json_decode($module->settings, true);
     if (is_string($config)) $config = json_decode($config, true);
 
-    $settings = $service->getCompanySettings($company_id);
-    $appearance = $settings['appearance'];
+    $settings = $service->getCompanySettings($user->id);
+    
+    $company = [
+        'name' => $user->name,
+        'display_name' => $user->display_name ?? $user->name,
+        'bio' => $user->description ?? 'Portfólio de fotografias e registros visuais.',
+        'avatar' => $user->profile_photo_url ?? null,
+    ];
+
     $items = []; 
 
-    return view($slug . '.index', compact('config', 'appearance', 'items'));
+    return view($slug . '.index', [
+        'config' => $config,
+        'appearance' => $settings['appearance'],
+        'company' => $company,
+        'items' => $items,
+        'total_count' => count($items)
+    ]);
     }
 
     /**
