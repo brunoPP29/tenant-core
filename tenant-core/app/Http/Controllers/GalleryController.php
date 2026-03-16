@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\GalleryService;
 use Illuminate\Http\Request;
 
 class GalleryController extends Controller
@@ -9,9 +10,13 @@ class GalleryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(string $id)
+    public function index(string $id, GalleryService $service)
     {
-        
+        if ($service->isGalleryActive($id)) {
+            return view('gallery.manage');
+        }else{
+            abort(404);
+        }
     }
 
     /**
