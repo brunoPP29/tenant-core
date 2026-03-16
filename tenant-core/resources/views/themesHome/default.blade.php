@@ -126,8 +126,8 @@
         <main class="container mx-auto px-8 pb-24">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 @foreach($modules_info as $module)
-                    <a href="/{{ $module['slug'] }}" class="group">
-                        <div class="interactive-card {{ $cardBg }} border p-10 h-full flex flex-col relative overflow-hidden shadow-sm">
+                <a href="{{ url('/site/' . request()->route('company_name') . '/' . $module['slug']) }}" class="group">
+                            <div class="interactive-card {{ $cardBg }} border p-10 h-full flex flex-col relative overflow-hidden shadow-sm">
                             {{-- Fundo sutil com primária apenas --}}
                             <div class="absolute -right-8 -top-8 w-32 h-32 bg-primary/5 rounded-full group-hover:scale-110 transition-transform duration-500"></div>
                             

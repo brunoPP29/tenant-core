@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CompanyModule;
 use App\Models\User;
 use App\Services\SiteService;
+use Faker\Provider\Company;
 use Illuminate\Http\Request;
 
 class SitesController extends Controller
@@ -63,9 +64,29 @@ class SitesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $company_name, string $slug, SiteService $service)
     {
-        //
+$company_id = User::where('name', $company_name)->value('id');
+
+    $module = CompanyModule::where('user_id', $company_id)
+        ->where('is_active', true)
+        ->get()
+        ->first(function ($item) use ($slug) {
+            $settings = is_array($item->settings) ? $item->settings : json_decode($item->settings, true);
+            if (is_string($settings)) $settings = json_decode($settings, true);
+            return ($settings['slug'] ?? null) === $slug;
+        });
+
+    if (!$module) abort(404);
+
+    $config = is_array($module->settings) ? $module->settings : json_decode($module->settings, true);
+    if (is_string($config)) $config = json_decode($config, true);
+
+    $settings = $service->getCompanySettings($company_id);
+    $appearance = $settings['appearance'];
+    $items = []; 
+
+    return view($slug . '.index', compact('config', 'appearance', 'items'));
     }
 
     /**

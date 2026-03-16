@@ -78,6 +78,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::controller(SitesController::class)->group(function () {
         Route::get('/site/{company_name}', 'index')->name('sites.index');
+        Route::get('/site/{company_name}/{slug}', 'show')->name('sites.show');
     });
 
 
