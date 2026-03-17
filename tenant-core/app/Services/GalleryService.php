@@ -11,8 +11,9 @@ class GalleryService
         $haveModel = CompanyModule::where('id', $module_id)
                         ->where('is_active', true)
                         ->firstOrFail();
+        
         $settings = json_decode($haveModel->settings);
-        return $settings->slug === 'gallery';
+        return $haveModel->user_id;
 
     }
 

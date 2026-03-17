@@ -12,8 +12,9 @@ class GalleryController extends Controller
      */
     public function index(string $id, GalleryService $service)
     {
-        if ($service->isGalleryActive($id)) {
-            return view('gallery.manage');
+        $companyIdCheck = $service->isGalleryActive($id);
+        if ($companyIdCheck) {
+            return view('gallery.manage', compact('companyIdCheck'));
         }else{
             abort(404);
         }
