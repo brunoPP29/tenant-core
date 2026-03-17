@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GalleryRequest;
 use App\Services\GalleryService;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class GalleryController extends Controller
 {
@@ -31,9 +33,15 @@ class GalleryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(GalleryRequest $request, GalleryService $service) : RedirectResponse
+    {  
+        try {
+            $service->uploadPhoto($request->validated());
+
+            return back()->with('success', 'Foto adicionada à galeria com sucesso!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Erro ao salvar: ' . $e->getMessage());
+        }
     }
 
     /**

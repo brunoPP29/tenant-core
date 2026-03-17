@@ -74,6 +74,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         |--------------------------------------------------------------------------
         */
         Route::controller(GalleryController::class)->group(function () {
+            Route::post('/company/manage/gallery', 'store')->name('modulesCompany.galleryStore');
             Route::get('/company/manage/gallery/{id}', 'index')->name('modulesCompany.galleryManage');
     });
 
