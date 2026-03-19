@@ -64,35 +64,8 @@ class SitesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $company_name, string $slug, SiteService $service)
+    public function show()
     {
-    $user = User::where('name', $company_name)->firstOrFail();
-
-    $module = $service->getModule($slug, $user);
-
-    if (!$module) abort(404);
-
-    $config = is_array($module->settings) ? $module->settings : json_decode($module->settings, true);
-    if (is_string($config)) $config = json_decode($config, true);
-
-    $settings = $service->getCompanySettings($user->id);
-    
-    $company = [
-        'name' => $user->name,
-        'display_name' => $user->display_name ?? $user->name,
-        'bio' => $user->description ?? 'Portfólio de fotografias e registros visuais.',
-        'avatar' => $user->profile_photo_url ?? null,
-    ];
-
-    $items = []; 
-
-    return view($slug . '.index', [
-        'config' => $config,
-        'appearance' => $settings['appearance'],
-        'company' => $company,
-        'items' => $items,
-        'total_count' => count($items)
-    ]);
     }
 
     /**

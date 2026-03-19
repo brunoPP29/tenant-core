@@ -88,11 +88,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::controller(SitesController::class)->group(function () {
         Route::get('/site/{company_name}', 'index')->name('sites.index');
-        Route::get('/site/{company_name}/{slug}', 'show')->name('sites.show');
     });
 
-
-
+            /*
+            |--------------------------------------------------------------------------
+            | ROTAS DO SITE GALERIA
+            |--------------------------------------------------------------------------
+            */
+        Route::controller(GalleryController::class)->group(function () {
+            Route::get('/site/{company_name}/gallery', 'viewGallery')->name('sites.viewGallery');
+    });
 
 
 

@@ -15,7 +15,7 @@ class CompanyModuleService
         return CompanyModule::create([
             'user_id' => Auth::id(),
             'module_id' => $data['module_id'],
-            'settings' => json_encode(collect($data)->except(['_token', '_method', 'module_id'])->all()),
+            'settings' => collect($data)->except(['_token', '_method', 'module_id'])->all(),
             'activated_at' => now()->toDateTimeString(),
             'is_active' => true,
         ]);

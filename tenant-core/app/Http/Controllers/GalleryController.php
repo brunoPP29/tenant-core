@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GalleryRequest;
 use App\Services\GalleryService;
+use App\Services\SiteService;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -74,5 +75,18 @@ class GalleryController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function viewGallery(string $company_name, GalleryService $service, SiteService $siteService)
+    {
+        //checar se gallery ta active $idCompany = $service->isGalleryActive($module_id);
+        $company_id = $siteService->getCompanyIdByName($company_name);
+        $company_settings = $siteService->getCompanySettings($company_id);
+        $module_id = $siteService->getIdBySlug('gallery', $company_id);
+        dd($module_id);
+        $configsModule = $siteService->getModuleConfig($module_id);
+        
+        dd($company_id, $company_settings, $module_id, $configsModule);
+
     }
 }

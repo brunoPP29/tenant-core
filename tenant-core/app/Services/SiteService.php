@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\CompanyModule;
 use App\Models\Module;
 use App\Models\CompanySettings;
+use App\Models\User;
 
 class SiteService
 {
@@ -29,15 +30,23 @@ class SiteService
         return CompanySettings::where('company_id', $user_id)->value('settings');
     }
 
-    public function getModule($slug, $user){
-        return CompanyModule::where('user_id', $user->id)
+    public function getIdBySlug($slug, $company_id){
+        $modulo = CompanyModule::find(12);
+        dd($modulo->settings);
+
+        return CompanyModule::where('user_id', $company_id)
+        ->where('settings', 'like', '%"slug":"' . $slug . '"%')
         ->where('is_active', true)
-        ->get()
-        ->first(function ($item) use ($slug) {
-            $settings = is_array($item->settings) ? $item->settings : json_decode($item->settings, true);
-            if (is_string($settings)) $settings = json_decode($settings, true);
-            return ($settings['slug'] ?? null) === $slug;
-        });
+        ->value('id');
+    }
+
+    public function getModuleConfig($module_id){
+        return CompanyModule::where('id', $module_id)->value('settings');
+    }
+
+
+    public function getCompanyIdByName($company_name){
+        return User::where('name', $company_name)->value('id');
     }
 }
 
