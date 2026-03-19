@@ -16,7 +16,7 @@ class GalleryService
                         ->where('is_active', true)
                         ->firstOrFail();
         
-        $settings = json_decode($haveModel->settings);
+        $settings = $haveModel->settings;
         return $haveModel->user_id;
 
     }

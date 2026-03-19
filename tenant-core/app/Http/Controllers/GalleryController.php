@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GalleryRequest;
+use App\Models\Gallery;
 use App\Services\GalleryService;
 use App\Services\SiteService;
 use Illuminate\Http\Request;
@@ -83,8 +84,11 @@ class GalleryController extends Controller
         $company_id = $siteService->getCompanyIdByName($company_name);
         $company_settings = $siteService->getCompanySettings($company_id);
         $module_id = $siteService->getIdBySlug('gallery', $company_id);
-        $configsModule = $siteService->getModuleConfig($module_id);
-        dd($company_id, $company_settings, $module_id, $configsModule);
+        $configs_module = $siteService->getModuleConfig($module_id);
+
+        $photos = Gallery::where('user_id', $company_id)->get();
+
+        return view('gallery.index', compact('photos', 'company_settings', 'configs_module', 'company_name'));
 
     }
 }
