@@ -83,9 +83,7 @@ class GalleryController extends Controller
         $company_id = $siteService->getCompanyIdByName($company_name);
         $company_settings = $siteService->getCompanySettings($company_id);
         $module_id = $siteService->getIdBySlug('gallery', $company_id);
-        dd($module_id);
         $configsModule = $siteService->getModuleConfig($module_id);
-        
         dd($company_id, $company_settings, $module_id, $configsModule);
 
     }

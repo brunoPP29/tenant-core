@@ -31,11 +31,8 @@ class SiteService
     }
 
     public function getIdBySlug($slug, $company_id){
-        $modulo = CompanyModule::find(12);
-        dd($modulo->settings);
-
         return CompanyModule::where('user_id', $company_id)
-        ->where('settings', 'like', '%"slug":"' . $slug . '"%')
+        ->where('settings->slug', $slug)
         ->where('is_active', true)
         ->value('id');
     }
