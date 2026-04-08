@@ -1,59 +1,56 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Multi-Tenant Modular CMS
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este projeto é um sistema de CMS modular e multi-tenant construído com Laravel, Livewire e Flux. Ele permite que diferentes empresas (tenants) gerenciem seus próprios sites e módulos de forma independente.
 
-## About Laravel
+##  Tecnologias
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **PHP 8.2+**
+- **Laravel 12**
+- **Livewire 4**
+- **Livewire Flux** (UI Components)
+- **Tailwind CSS**
+- **SQLite** (Database default para desenvolvimento)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+##  Estrutura do Projeto
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+O projeto utiliza uma arquitetura modular onde as funcionalidades são separadas em módulos globais que podem ser ativados ou desativados para cada empresa.
 
-## Learning Laravel
+- `tenant-core/`: Contém todo o código fonte da aplicação Laravel.
+  - `app/Models/`: Modelos de dados (User, CompanyModule, Module, Gallery, etc).
+  - `app/Http/Controllers/`: Controladores para gerenciar módulos, configurações e galeria.
+  - `app/Services/`: Camada de serviço para lógica de negócio (ex: `GalleryService`).
+  - `resources/views/`: Templates Blade utilizando componentes de layout.
+  - `routes/web.php`: Definições de rotas administrativas e do site.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+##  Funcionalidades Principais
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Gerenciamento de Módulos Globais**: Superusuários podem criar e gerenciar módulos disponíveis no sistema.
+- **Configurações de Empresa**: Cada usuário/empresa pode configurar detalhes do seu site.
+- **Módulo de Galeria (um dos)**:
+  - Upload de imagens com metadados (título, descrição, alt text).
+  - Listagem de fotos por empresa.
+  - Edição de informações e substituição de imagens.
+  - Exclusão segura de fotos e arquivos físicos.
+  - Verificação de propriedade (Security ownership check).
 
-## Laravel Sponsors
+##  Instalação e Configuração
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+1. Clone o repositório.
+2. Navegue até a pasta `tenant-core/`.
+3. Execute o comando de setup (instala as dependências, gera a chave, migra o banco e builda os assets):
+   ```bash
+   composer run setup
+   ```
+4. Inicie o servidor de desenvolvimento:
+   ```bash
+   composer run dev
+   ```
 
-### Premium Partners
+##  Gerenciamento da Galeria
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+O módulo de galeria permite que as empresas gerenciem seus ativos visuais. As rotas principais são:
+- `GET /company/manage/gallery/{id}`: Gerenciar fotos da galeria.
+- `GET /site/{company_name}/gallery`: Visualização pública da galeria da empresa.
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+Desenvolvido como uma plataforma robusta e escalável para gerenciamento multi-tenant.
