@@ -76,7 +76,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::controller(GalleryController::class)->group(function () {
             Route::post('/company/manage/gallery', 'store')->name('modulesCompany.galleryStore');
             Route::get('/company/manage/gallery/{id}', 'index')->name('modulesCompany.galleryManage');
-    });
+            Route::get('/company/manage/gallery/{id}/edit', 'edit')->name('modulesCompany.galleryEdit');
+            Route::patch('/company/manage/gallery/{id}', 'update')->name('modulesCompany.galleryUpdate');
+            Route::delete('/company/manage/gallery/{id}', 'destroy')->name('modulesCompany.galleryDestroy');
+        });
 
 });
 
