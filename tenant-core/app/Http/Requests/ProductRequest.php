@@ -4,11 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GalleryRequest extends FormRequest
+class ProductRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true; // Ajuste conforme sua política de acesso
+        return true;
     }
 
     public function rules(): array
@@ -17,10 +17,10 @@ class GalleryRequest extends FormRequest
 
         return [
             'user_id'     => 'nullable|exists:users,id',
-            'photo'       => ($isUpdate ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg,webp|max:5120', // Máx 5MB
-            'title'       => 'nullable|string|max:255',
+            'name'        => 'required|string|max:255',
             'description' => 'nullable|string',
-            'alt_text'    => 'nullable|string|max:255',
+            'price'       => 'nullable|numeric|min:0',
+            'image'       => ($isUpdate ? 'nullable' : 'nullable') . '|image|mimes:jpeg,png,jpg,webp|max:5120',
             'module_id'   => $isUpdate ? 'required' : 'nullable',
         ];
     }

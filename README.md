@@ -5,8 +5,8 @@ Este projeto é um sistema de CMS modular e multi-tenant construído com Laravel
 ## 🚀 Tecnologias
 
 - **PHP 8.2+**
-- **Laravel 12**
-- **Livewire 4**
+- **Laravel 12 (Dev version)**
+- **Livewire 4 (Dev version)**
 - **Livewire Flux** (UI Components)
 - **Tailwind CSS**
 - **SQLite** (Database default para desenvolvimento)

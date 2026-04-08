@@ -39,7 +39,9 @@ class GalleryController extends Controller
     public function store(GalleryRequest $request, GalleryService $service): RedirectResponse
     {
         try {
-            $service->uploadPhoto($request->validated());
+            $data = $request->validated();
+            $data['user_id'] = auth()->id();
+            $service->uploadPhoto($data);
 
             return back()->with('success', 'Foto adicionada à galeria com sucesso!');
         } catch (\Exception $e) {

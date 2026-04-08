@@ -3,7 +3,9 @@
 use App\Http\Controllers\CompanySettingsController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\GlobalModulesController;
+use App\Http\Controllers\LinkController;
 use App\Http\Controllers\ModulesController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SitesController;
 use Illuminate\Support\Facades\Route;
 
@@ -81,6 +83,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::delete('/company/manage/gallery/{id}', 'destroy')->name('modulesCompany.galleryDestroy');
         });
 
+        Route::controller(ProductController::class)->group(function () {
+            Route::post('/company/manage/products', 'store')->name('modulesCompany.productsStore');
+            Route::get('/company/manage/products/{id}', 'index')->name('modulesCompany.productsManage');
+            Route::get('/company/manage/products/{id}/edit', 'edit')->name('modulesCompany.productsEdit');
+            Route::patch('/company/manage/products/{id}', 'update')->name('modulesCompany.productsUpdate');
+            Route::delete('/company/manage/products/{id}', 'destroy')->name('modulesCompany.productsDestroy');
+        });
+
+        Route::controller(LinkController::class)->group(function () {
+            Route::post('/company/manage/links', 'store')->name('modulesCompany.linksStore');
+            Route::get('/company/manage/links/{id}', 'index')->name('modulesCompany.linksManage');
+            Route::get('/company/manage/links/{id}/edit', 'edit')->name('modulesCompany.linksEdit');
+            Route::patch('/company/manage/links/{id}', 'update')->name('modulesCompany.linksUpdate');
+            Route::delete('/company/manage/links/{id}', 'destroy')->name('modulesCompany.linksDestroy');
+        });
+
 });
 
 /*
@@ -100,7 +118,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
             */
         Route::controller(GalleryController::class)->group(function () {
             Route::get('/site/{company_name}/gallery', 'viewGallery')->name('sites.viewGallery');
-    });
+        });
+
+        Route::controller(ProductController::class)->group(function () {
+            Route::get('/site/{company_name}/catalog', 'viewCatalog')->name('sites.viewCatalog');
+        });
+
+        Route::controller(LinkController::class)->group(function () {
+            Route::get('/site/{company_name}/links', 'viewLinks')->name('sites.viewLinks');
+        });
 
 
 
