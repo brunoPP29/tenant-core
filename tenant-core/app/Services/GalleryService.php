@@ -8,17 +8,18 @@ use App\Models\Gallery;
 class GalleryService
 {
     
-    public function isGalleryActive($module_id){
-            if (!is_numeric($module_id)) {
-                return false;
-            }
-        $haveModel = CompanyModule::where('id', $module_id)
-                        ->where('is_active', true)
-                        ->firstOrFail();
-        
-        $settings = $haveModel->settings;
-        return $haveModel->user_id;
+    public function isGalleryActive($module_id)
+    {
+        if (!is_numeric($module_id)) {
+            return false;
+        }
 
+        $haveModel = CompanyModule::where('id', $module_id)
+            ->where('user_id', auth()->id())
+            ->where('is_active', true)
+            ->firstOrFail();
+
+        return $haveModel->user_id;
     }
 
     public function uploadPhoto(array $data)
