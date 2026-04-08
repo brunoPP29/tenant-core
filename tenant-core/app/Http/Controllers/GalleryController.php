@@ -18,8 +18,9 @@ class GalleryController extends Controller
     {
         $companyIdCheck = $service->isGalleryActive($id);
         if ($companyIdCheck) {
-            return view('gallery.manage', compact('companyIdCheck'));
-        }else{
+            $photos = Gallery::where('user_id', $companyIdCheck)->get();
+            return view('gallery.manage', compact('companyIdCheck', 'photos', 'id'));
+        } else {
             abort(404);
         }
     }
@@ -35,8 +36,8 @@ class GalleryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(GalleryRequest $request, GalleryService $service) : RedirectResponse
-    {  
+    public function store(GalleryRequest $request, GalleryService $service): RedirectResponse
+    {
         try {
             $service->uploadPhoto($request->validated());
 
@@ -59,23 +60,36 @@ class GalleryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $photo = Gallery::where('user_id', auth()->id())->findOrFail($id);
+        return view('gallery.edit', compact('photo'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(GalleryRequest $request, string $id, GalleryService $service)
     {
-        //
+        try {
+            $service->updatePhoto($id, $request->validated());
+
+            return redirect()->route('modulesCompany.galleryManage', ['id' => $request->module_id])
+                ->with('success', 'Foto atualizada com sucesso!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Erro ao atualizar: ' . $e->getMessage());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id, GalleryService $service)
     {
-        //
+        try {
+            $service->deletePhoto($id);
+            return back()->with('success', 'Foto removida com sucesso!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Erro ao remover: ' . $e->getMessage());
+        }
     }
 
     public function viewGallery(string $company_name, GalleryService $service, SiteService $siteService)
